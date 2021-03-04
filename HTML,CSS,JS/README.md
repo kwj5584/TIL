@@ -377,3 +377,57 @@ main() -> console.log(1) -> 콘솔에 1 찍힘 -> cb함수 -> web APIs에 setTim
 
 console.log(3) -> 콘솔에 3 찍힘 -> task queue에 cb함수 -> console.log(2)
 -> 콘솔에 2찍힘 순으로 나온다
+
+## 이벤트 버블링
+이벤트 버블링은 특정 화면요소에서 이벤트가 발생했을 때 해당 이벤트가 상위 화면 요소들로 전달되어가는 특성이다.
+
+    상위 화면요소란 ? HTML요소는 기본적으로 트리구조이다. 여기서 트리 구조상 한 단계 위의 요소를 상위요소라 하며
+    body태그를 최상위 요소라 한다.
+
+    <body>
+        <div class="one">
+            <div class="two">
+                <div class="three">
+                </div>
+            </div>
+        </div>
+    </body>
+-----------
+
+    var divs = document.querySelectorAll('div');
+    divs.forEach(function(div) {
+        div.addEventListener('click', logEvent);
+    });
+
+    function logEvent(event) {
+        console.log(event.currentTarget.className);
+    }
+위 코드에서 <div class="three"></div>를 클릭하면 three -> two -> one 순으로 실행된다.
+위와 같이 하위에서 상위요소로 이벤트 전파 방식을 이벤트 버블링이라 한다.
+
+## 이벤트 캡쳐
+이벤트 캡쳐는 이벤트 버블링과 반대로 진행되는 전파 방식이다.
+
+    <body>
+        <div class="one">
+            <div class="two">
+                <div class="three">
+                </div>
+            </div>
+        </div>
+    </body>
+-----------
+
+    var divs = document.querySelectorAll('div');
+    divs.forEach(function(div) {
+	div.addEventListener('click', logEvent, {
+		capture: true // default 값은 false입니다.
+	});
+});
+
+    function logEvent(event) {
+        console.log(event.currentTarget.className);
+    }
+
+addEventListnere() API에서 옵션 객체에 capture:true를 설정해주면 해당 이벤트를 감지하기 위해 이벤트 버블링과 반대 방향으로 탐색한다.
+따라서 아까와 동일하게 <div class="three"></div>를 클릭하면 one -> two -> three 순으로 실행된다.
