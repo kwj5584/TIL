@@ -362,3 +362,18 @@ PUT은 자원 전체를 갱신하지만, PATCH는 해당자원의 일부를 교�
 정해진 시간 혹은 이벤트가 발생한 순간에 순차적으로 callback queue에 적재한다.
 
 callback queue에 줄을 선 함수등른 call stack에 쌓여있던 것들이 모두 제거되면 차례대로 스택에 쌓여 실행되게 된다.
+
+        console.log(1);
+        
+        setTimeout(function cb(){
+            console.log(2);
+        },5000);
+
+        console.log(3);
+
+위와 같이 실행하면 스택에 
+
+main() -> console.log(1) -> 콘솔에 1 찍힘 -> cb함수 -> web APIs에 setTimeout(5000) -> 
+
+console.log(3) -> 콘솔에 3 찍힘 -> task queue에 cb함수 -> console.log(2)
+-> 콘솔에 2찍힘 순으로 나온다
