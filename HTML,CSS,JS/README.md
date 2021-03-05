@@ -423,7 +423,7 @@ console.log(3) -> 콘솔에 3 찍힘 -> task queue에 cb함수 -> console.log(2)
 	div.addEventListener('click', logEvent, {
 		capture: true // default 값은 false입니다.
 	});
-});
+    });
 
     function logEvent(event) {
         console.log(event.currentTarget.className);
@@ -431,3 +431,57 @@ console.log(3) -> 콘솔에 3 찍힘 -> task queue에 cb함수 -> console.log(2)
 
 addEventListnere() API에서 옵션 객체에 capture:true를 설정해주면 해당 이벤트를 감지하기 위해 이벤트 버블링과 반대 방향으로 탐색한다.
 따라서 아까와 동일하게 <div class="three"></div>를 클릭하면 one -> two -> three 순으로 실행된다.
+
+## HTML 렌더링 중 Javascript 실행
+<hr/>
+
+일반적으로 HTML을 파싱하고 외부 자원인 CSS, JS를 로드하게 된다.
+JS는 script 태그를 만나면 해석 및 실행되는 동안 문서의 파싱은 중단되게 된다.
+스크립트가 외부에 있을 경우 네트워크로부터 자원을 가져와야 하는데 이 또한 실시간으로 처리되고 자원을 받을 때까지 파싱은 중단된다.
+
+이러한 문제를 야기시키지 않고 UX를 떨어뜨리지 않게 스크립트 소스를 body 태그 끝에 두는 것을 권장한다.
+
+문서의 <head> 영역에 스크립트가 삽입되거나 외부 파일에 정의 되있을 경우 async나 defer를 사용하면 된다.
+async 속성은 HTML렌더링을 멈추지 않고 동시에 js파일을 다운로드하고 다운로드가 끝난 후 자바스크립트를 실행한다.
+defer 속성은 HTML렌더링을 멈추지 않고 동시에 js 파일을 다운로드하고 HTML렌더링이 끝난 후 자바스크립트를 실행한다.
+
+## 서버사이드렌더링과 SPA 차이
+<hr/>
+
+렌더링이란 웹 페이지 접속 시 그 페이지를 화면에 그려주는 것.
+
+SSR : Server Side Rendering
+요청시마다 새로고침이 일어나며 서버에 새로운 페이지에 대한 요청을 하는 방식이다.
+
+CSR : Client Side Rendering
+
+SPA : Single Page Application
+
+모바일 시대가 도래하며 일반적인 컴퓨터에 비해 성능이 낮은 모바일에 최적화시키기위해 SPA개념이 생겨났다.
+
+SPA는 최초 한번 페이지 전체를 로딩 후 데이터만 변경하여 사용할 수 있는 웹 어플리케이션이다.
+서버는 단지 JSON파일만 보내주는 역할을 하며 html을 그리는 역할은 클라이언트 측 자바스크립트가 수행한다.
+그리고 이것이 클라이언트 사이드 렌더링이다.
+
+SSR(서버사이드 렌더링)의 경우 초기 로딩속도가 빠르고 SEO(검색 엔진 최적화)에 유리하지만 View 변경시 서버에 계속 요청해야 하므로 서버 부담이 크다.
+CSR(클라이언트사이드 렌더링)의 경우 초기 로딩속도는 느리지만 초기 로딩 후 서버에 다시 요청 할 필요가 없이 클라이언트 내에서 작업이 이루어지므로 매우 빠르다.
+
+## Require와 Import의 차이점
+<hr/>
+
+file.js를 불러온다 가정 할 때 import는 특정 값만 따로 가져올 수 있고 나머지 값들은 웹팩의 tree shaking으로 빌드에서 제거된다.
+즉, 불필요한 파일을 제거함으로 코드량을 줄이고 성능을 좋게 할 수 있다.
+
+    //file.js
+    export{
+        a:'a',
+        b:'b',
+        c:'c'
+    };
+    //main
+    import {a} from './file.js';
+
+require는 동적으로 모듈을 불러올 수 있지만, 불필요한 코드들가지 불러온다.
+babel-loader에서 웹팩의 tree shaking기능을 유지하기 위해 설정시 modules:false로 설정하면 된다.
+
+import는 ES6 문법이라 현재 사용되는 브라우저에서 지원하지 않지만 babel과 같은 트랜스파일러가 해결해줄 수 있다.
