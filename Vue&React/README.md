@@ -12,6 +12,59 @@ Vue는 데이터를 생성한 후 자유롭게 업데이트 할 수 있지만, R
 React 컴포넌트는 style을 유지해주는 파일을 따로 .css로 생성하고 .js파일에서 javascript를 확장한 문법인 jsx를 통해 화면과 이벤트 처리를 담당한다.
 반면 Vue는 .vue파일안에 template, script, style을 모두 작성하여 사용하는 방식이다.
 
+### 데이터 바인딩
+
+양방향 데이터 바인딩과 단방향 데이터 바인딩의 차이는 HTML에서 변경된 내용이 데이터 영향을 미치는가이다.
+
+예를 들어 Vue.js는 엘리먼트에 데이터를 바인딩하면 Javascript코드로 데이터를 변경할 수도 있고 엘리먼트의 값(input)을 수정해서 데이터를 변경할 수 있다.
+
+하지만 React와 같은 단방향 데이터 바인딩은 Javascript -> HTML로 데이터 바인딩만 가능하다.
+
+언뜻 보기에는 단방향이 불편해보일 수 있지만 그만큼 단방향 데이터가 가지는 장점은 모든 Javascript 코드가 데이터에 집중되며 일관된 데이터 관리 로직을 갖는다는 점이다.
+
+#### React
+
+React는 단방향 데이터 흐름을 지향한다. 
+
+    ...
+    const [Name,setName] = useState("")
+
+    const onSetName = (e) => {
+        setName(e.currentTarget.value);
+    }
+    return(
+        <div>
+            <input onChange={onSetName} placeholder="Name" />
+        </div>
+    )
+
+위 코드처럼 input태그에서 onChange이벤트를 전달받으면 input값을 읽어와 Name state를 갱신한다.
+
+이때 값을 직접 수정하지 않고 새로운 state객체를 생성해서 교체하는 방식인데, 이는 react에서 강조하는 immutable한 객체를 사용하기 때문이다.
+
+#### Vue 
+
+vue 인스턴스 -> Template와 같이 한 방향으로 데이터 접근하는 것을 단방향 데이터 바인딩이라 한다.
+
+양방향 데이터 바인딩은 vue 인스턴스 ⇄ Template 두 방향 모두 데이터에 접근할 수 있도록 하는 것이다.
+
+양방향 데이터 바인딩을 가능하게 해주는 디렉티브가 v-model이다.
+
+    HTML
+    <template>
+        <div>
+            <input type="text" v-model="name">{{name}}</input>
+        </div>
+    </template>
+    Javascript
+    <script>
+        data(){
+            name:"test"
+        }
+    </script>
+    
+위 코드처럼 input태그의 v-model 디렉티브를 통해 Vue의 data를 직접 수정할 수 있다.
+
 ### Vue LifeCycle
 <hr/>
 Vue.js 라이프 사이클은 크게 Creation, Mountiong, Updating, Destruction으로 나뉜다.
