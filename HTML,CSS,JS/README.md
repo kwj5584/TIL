@@ -94,10 +94,11 @@ Java의 this는 인스턴스 자신(self)를 가리키는 참조변수다.
     함수의 상위 스코프를 결정하는 방식인 렉시컬 스코프(Lexical scop)는 함수를 선언할 때 결정된다.
 
 함수를 호출하는 방식은 아래와 같이 다양하다.
+
     1. 함수 호출
     2. 메소드 호출
     3. 생성자 함수 호출
-    4. apple/call/bind 호출
+    4. apply/call/bind 호출
 
 1. 함수 호출
 전역객체는 모든 객체의 유일한 최상위 객체를 의미하며 일반적으로 Browser-side에서는 window, Server-side에서는 global 객체를 의미한다.
@@ -184,6 +185,7 @@ Java의 this는 인스턴스 자신(self)를 가리키는 참조변수다.
     obj.foo();
 2. 메소드 호출
 함수가 객체의 프로퍼티 값이면 메소드로서 호출된다. 이때 메소드 내부의 this는 해당 메소드를 호출한 객체에 바인딩된다.
+
         var obj1 = {
             name: 'Lee',
             sayName: function() {
@@ -199,6 +201,7 @@ Java의 this는 인스턴스 자신(self)를 가리키는 참조변수다.
 
 3. 생성자 함수 호출
 기존 함수에 new 연산자를 붙여서 호출하면 해당 함수는 생성자 함수로 동작한다.
+
         // 생성자 함수
         function Person(name) {
         this.name = name;
