@@ -73,6 +73,7 @@ Vue.js 라이프 사이클은 크게 Creation, Mountiong, Updating, Destruction�
 Creation단계에서 실행되는 훅들이 라이프사이클중 가장 처음 실행된다. 이 단계에서 beforeCreate훅과 Created훅이 있다.
 
 -beforeCreate : 모든 훅 중 가장 먼저 실행되는 훅이다. data와 events가 세팅되지 않은 시점이다.
+
 -created : data와 events가 호라성화되어 접근할 수 있지만 템플릿과 가상돔은 마운트 및 렌더링되지 않은 상태이다.
 
 #### Mounting
@@ -81,6 +82,7 @@ Mountiong단계는 초기 렌더링 직전에 컴포넌트에 직접 접근할 �
 초기 랜더링 직전에 돔을 변경하고자 하다면 이 단계를 활용할 수 있다. 그러나 컴포넌트 초기에 세팅되어야 할 데이터는 created단계를 사용하는 편이 낫다.
 
 -beforeMount : 템플릿과 렌더 함수들이 컴파일 된 후 첫 렌더링이 일어나기 직전에 실행된다.
+
 -mounted : 컴포넌트, 템플릿, 렌더링된 돔에 접근할 수 있다.
 
 mounted훅에서 유의할 점은, 부모와 자식 관계의 컴포넌트에서 우리가 생각한 순서로 mounted가 발생하지 않는다는 점이다.
@@ -90,11 +92,13 @@ mounted훅에서 유의할 점은, 부모와 자식 관계의 컴포넌트에서
 디버깅이나 프로파일링등을 위해 컴포넌트 리렌더링시점을 알고 싶을때 사용한다.
 
 -beforeUpdate : 컴포넌트 데이터가 변하여 업데이트 사이클이 시작될 때 실행된다. 정확히는 돔이 리렌더링되고 패치되기 직전에 실행된다.
+
 -updated : 컴포넌트의 데이터가 변하여 리렌더링이 일어난 후에 실행된다. 여기서 상태를 변경하면 무한루프에 빠질 수 있다.
 
 #### Destruction
 -beforeDestroy : 뷰 인스턴스가 제거되기 직전에 호출된다. 이벤트 리스너를 제거하고자 할 때 사용된다.
 -destroyed : 뷰 인스턴스가 제거된 후에 호출된다. 뷰 인스턴스의 모든 디렉티브가 바인딩 해제되고 이벤트 리스너가 제거되며 모든 하위 뷰 인스턴스도 삭제된다.
+
 
 ### React lifeCycle
 <hr/>
@@ -102,7 +106,9 @@ mounted훅에서 유의할 점은, 부모와 자식 관계의 컴포넌트에서
 #### Class Component
 
 ##### Mount
-컴포넌트가 처음 실행 될 때를 Mount라고 표현한다. 마운드될 때 발생하는 생명주기들은 constructor, getDerivedStateFromProps, render, componentDidMount가 있다.
+컴포넌트가 처음 실행 될 때를 Mount라고 표현한다.
+
+마운드될 때 발생하는 생명주기들은 constructor, getDerivedStateFromProps, render, componentDidMount가 있다.
 
 -constructor : 컴포넌트 생성자 메소드이다. 컴포넌트가 만들어지면 가장 먼저 실행되는 메소드이다.
 
@@ -112,8 +118,9 @@ mounted훅에서 유의할 점은, 부모와 자식 관계의 컴포넌트에서
 
 -componentDidMount : 컴포넌트의 첫번째 렌더링이 마치면 호출되는 메소드이다. 이 메소드가 호출되는 시점에 우리가 만든 컴포넌트가 화면에 나타난 상태이다.
 
-여기선 주로 DOM을 사용해야하는 외부 라이브러리를 연동하거나, 해당 컴포넌트에 필요로 하는 데이터를 요청하기 위해 axios, fetch등을 통해 ajax요청을 하거나,
-DOM의 속성을 읽거나 직접 변경하는 작업을 진행한다.
+여기선 주로 DOM을 사용해야하는 외부 라이브러리를 연동하거나, 해당 컴포넌트에 필요로 하는 데이터를 요청하기 위해
+
+axios, fetch등을 통해 ajax요청을 하거나, DOM의 속성을 읽거나 직접 변경하는 작업을 진행한다.
 
 ##### Update
 컴포넌트가 업데이트 되는 시점에 발생하는 생명주기들은 getDerivedStateFromProps, shouldComponentUpdate, render, getSnapshotBeforeUpdate, componentDidUpdate가 있다.
