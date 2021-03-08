@@ -113,6 +113,7 @@ Java의 this는 인스턴스 자신(self)를 가리키는 참조변수다.
         node
         this === global // true
 전역객체는 전역 스코프를 갖는 전역변수를 프로퍼티로 소유한다. 글로벌 영역에 선언한 함수는 전역객체의 프로퍼티로 접근할 수 있는 전역 변수의 메소드이다.
+
         var ga = 'Global variable';
 
         console.log(ga);
