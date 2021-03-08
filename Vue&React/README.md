@@ -67,7 +67,7 @@ vue 인스턴스 -> Template와 같이 한 방향으로 데이터 접근하는 �
 
 ### Vue LifeCycle
 <hr/>
-Vue.js 라이프 사이클은 크게 Creation, Mountiong, Updating, Destruction으로 나뉜다.
+Vue.js 라이프 사이클은 크게 Creation, Mounting, Updating, Destruction으로 나뉜다.
 
 #### Creation
 Creation단계에서 실행되는 훅들이 라이프사이클중 가장 처음 실행된다. 이 단계에서 beforeCreate훅과 Created훅이 있다.
